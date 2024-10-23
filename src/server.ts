@@ -31,5 +31,9 @@ console.log("Starting server...");
  *
  */
 
+/**
+ * estilização automatica
+ */
+
 
 //https://learning.dnc.group/course/desenvolvedor-full-stack/player/149733/content/425422 600
