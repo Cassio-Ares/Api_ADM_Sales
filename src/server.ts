@@ -1,4 +1,4 @@
-console.log("Starting server...");
+console.log("Starting server...")
 
 /**
  * installs
@@ -21,19 +21,14 @@ console.log("Starting server...");
  *     esModuleInterop: true
  *     skipLibCheck: true
  *    forceConsistentCasingInFileNames: true
- * 
- * 
+ *
+ *
  * packge.json
- * 
+ *
  *  scripts:{
  *     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/server.ts"
  *   }
  *
  */
 
-/**
- * estilização automatica
- */
 
-
-//https://learning.dnc.group/course/desenvolvedor-full-stack/player/149733/content/425422 600
