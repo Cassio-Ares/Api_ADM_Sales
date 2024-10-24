@@ -7,7 +7,7 @@ const compat = new FlatCompat();
 
 export default [
   eslint.configs.recommended,
-  ...compat.extends('plugin:@typescript-eslint/recommended'),
+  ...compat.extends('plugin:@typescript-eslint/recommended', 'prettier/@typescript-eslint','plugin:prettier/recommended'),
   {
     files: ['**/*.ts'],
     languageOptions: {
@@ -19,9 +19,11 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tseslint,
+      'prettier': eslint.configs.prettier
     },
     rules: {
       'no-console': 'warn',
+      'prettier/prettier': 'error'
     },
     ignores: ['node_modules/**', 'dist/**', 'build/**'],
   },
