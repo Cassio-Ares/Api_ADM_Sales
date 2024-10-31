@@ -1,57 +1,73 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import 'express-async-errors';// para capturar erros e facilitar o tratamento
+import 'reflect-metadata';
+import 'express-async-errors'; // para capturar erros e facilitar o tratamento
+
 import ErroHandleMiddleware from '@shared/middlewares/ErroHandleMiddleware'; //middleware que possui a class para tratamento de erros
-
-
+import { AppDataSource } from '@shared/typeorm/datasource';
 import { routes } from './routes';
 
-const app = express();
+AppDataSource.initialize()
+  .then(async () => {
+    const app = express();
+    app.use(cors());
+    dotenv.config();
+    app.use(express.json());
 
-app.use(cors());
-dotenv.config();
-app.use(express.json());
+    app.use(routes);
+    app.use(ErroHandleMiddleware.handleError);
 
-app.use(routes);
-app.use(ErroHandleMiddleware.handleError);
+    console.log('Connected to the database');
 
-
-app.listen(process.env.PORT || 3333, () => {
-  console.log(`Server running on port ${process.env.PORT || 3333}`);
-});
+    app.listen(process.env.PORT || 3333, () => {
+      console.log(`Server running on port ${process.env.PORT || 3333}`);
+    });
+  })
+  .catch(err => {
+    console.error('Failed to connect to the database', err);
+  });
 
 /**
- *  "tsconfig-paths": "^4.2.0",
+ * npm i typeorm reflect-metadata pg
  *
- *  como vamos ter muitas pastas o   "tsconfig-paths": "^4.2.0", no ajuda a
- * criar alias para não precisar ficar ../../../../ varias vezes.
+ * reflect-metadata para usar decoreitors (ex: @entity) usando metadatas do express
  *
- * no tsConfig.json
- *    colocamos    "baseUrl": "./",
+ * pg para usar o postgres
  *
- *    "paths": {
- *     "@nome da pasta/*": ["src/nome da pasta /* "] obs * seg todos
- *     }
  *
- *    dai ao inves de eu usar ../../../ eu só uso "@nome da pasta/ para chamar
+ * import 'reflect-metadata'; IMPORTANTE na raiz
  *
- * EX: "paths": {
-      "@config/*":["src./config/*"],
-      "@models/*":["src./models/*"],
-      "@shared/*":["src./shared/*"],
-     },
-
-     e no script{
-      "dev": "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/server.ts",
-
-           nos acrescentamos -r tsconfig-paths/register para dizer que vamos usar path
-      }
+ *no tsConfig liberar
+ *
+ *   "emitDecoratorMetadata": true,
+ *    "experimentalDecorators": true,
+ *    "strictPropertyInitialization": true,
+ * 609
  */
 
 /**
- * Dependencias :
+ * Em typeorm
+ *        datasource
+ *   configuramos:
+ *    import 'reflect-metadata';
+ *    import 'dotenv/config';
+ *    import { DataSource } from 'typeorm';
  *
- * npm i express cors express-async-errors
- * npm i -D @types/express @types/cors
+ *      const port = process.env.DB_PORT as number | undefined;
+ *
+ *      export const AppDataSource = new DataSource({
+ *         type: 'postgres',
+ *         host: process.env.DB_HOST,
+ *         port: port,
+ *         username: process.env.DB_USER,
+ *         password: process.env.DB_PASS,
+ *         database: process.env.DB_NAME,
+ *})
+ *
+ *
+ * e então inicializamos no server como podemos ver acima.
+ *
+ * usar extensão Database client
+ *
  */
