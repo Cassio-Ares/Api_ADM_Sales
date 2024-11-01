@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
     "lint": "eslint \"**/*.ts\"",
-    "lint:fix": "eslint \"**/*.ts\" --fix"
+    "lint:fix": "eslint \"**/*.ts\" --fix",
+    "migration:create": "cross-env ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create ./src/shared/typeorm/migrations/%npm_config_name%",
+    "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./src/shared/typeorm/datasource.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +21,7 @@
     "@types/node": "^22.7.7",
     "@typescript-eslint/eslint-plugin": "^8.11.0",
     "@typescript-eslint/parser": "^8.11.0",
+    "cross-env": "^7.0.3",
     "eslint": "^9.13.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.4.1",
