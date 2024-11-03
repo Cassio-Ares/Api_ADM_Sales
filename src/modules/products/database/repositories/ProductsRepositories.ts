@@ -13,7 +13,7 @@ export const productsRepositories = AppDataSource.getRepository(Product).extend(
 );
 
 /**
- * Cliamos uma função que ira carregar metodos:
+ * Criamos uma função que ira carregar metodos:
  *
  * de AppDataSource usamos o metodo getRepository para carregar os metodos
  *

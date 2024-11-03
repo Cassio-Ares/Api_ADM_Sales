@@ -39,7 +39,7 @@ AppDataSource.initialize()
  * username: process.env.DB_USER,
  * password: process.env.DB_PASS,
  * database: process.env.DB_NAME,
- * entities:[`./src/modules/**/ database / entities /*.{ts,js}`] (indicamos onde irá estas as entidades)
+ * entities:[`./src/modules/* /database/entities/*.{ts,js}`] (indicamos onde irá estas as entidades)
  * dentro da pasta src/modules/** (qualquer pasta)/ databese/entities/*.(qualquer arquivo){js ou ts}
  * migrations: [`./src/shared/typeorm/migrations/*.{ts,js}`] (indica onde irá estar as migrations)
  * } )
